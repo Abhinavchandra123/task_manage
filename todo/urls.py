@@ -1,5 +1,4 @@
-from django.contrib import admin
-from django.urls import path,include
+from django.urls import path
 from .views import *
 from django.conf import settings
 from django.conf.urls.static import static
@@ -7,7 +6,7 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('dashboard/',index,name='ind'),
     path('management/',manage,name='manage'),
-    # path('',loginmanager,name='login'),
+    path('',loginmanager,name='login'),
     path('register/',addemp,name='add'),
     path('management/prev/',prev,name='prev'),
     path('report/',report,name='rep'),
