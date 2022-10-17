@@ -76,24 +76,24 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-if DEBUG==True:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
-        }
-    }
-else:
-    DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'todo',
-        'USER': 'taskmanager',
-        'PASSWORD': 'ABHInav1708580b',
-        'HOST': 'localhost',
-        'PORT': '',
-    }
-    }
+# if DEBUG==True:
+#     DATABASES = {
+#         'default': {
+#             'ENGINE': 'django.db.backends.sqlite3',
+#             'NAME': BASE_DIR / 'db.sqlite3',
+#         }
+#     }
+# else:
+DATABASES = {
+'default': {
+    'ENGINE': 'django.db.backends.postgresql_psycopg2',
+    'NAME': 'todo',
+    'USER': 'taskmanager',
+    'PASSWORD': 'ABHInav1708580b',
+    'HOST': 'localhost',
+    'PORT': '',
+}
+}
 
 
 # Password validation
