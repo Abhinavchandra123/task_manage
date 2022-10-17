@@ -1,0 +1,104 @@
+{%extends 'dashboard.html'%}
+{%block mainpane%}
+<td> <button class="btn btn-outline-primary" type="button" data-toggle="collapse" data-target="#collapseOneq{{emp.id}}"
+        aria-expanded="true" aria-controls="collapseOneq{{emp.id}}">New
+        tasks
+    </button></td>
+<td> <button class="btn btn-outline-primary" type="button" data-toggle="collapse" data-target="#collapseOne"
+        aria-expanded="true" aria-controls="collapseOne">prev
+        tasks
+    </button></td>
+</tr>
+
+</table>
+
+<div id="collapseOneq{{emp.id}}" class="collapse" aria-labelledby="headingOneq{{emp.id}}"
+    data-parent="#accordionExample">
+    <div class="card-body">
+        <h3 class="p-3">New Tasks</h3>
+        <table class="table css-serial">
+            <thead>
+
+                <tr class="border">
+                    <th scope="col">#</th>
+                    <th scope="col">Start date</th>
+                    <th scope="col">Job Name</th>
+                    <th scope="col">Task</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Reference</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody class="border">
+                {%for jobtd in jobtds%}
+                <tr>
+                    <td scope="row"></td>
+                    <td>{{jobtd.sdate}}</td>
+                    <form method="POST">
+                        {% csrf_token %}
+                        <input type="text" name="user" class="d-none" value="{{jobtd.id}}">
+                        <td><input type="text" name="job" placeholder="Job name" value="{{jobtd.jobname}}" required></td>
+                        <td><input type="text" name="task" placeholder="Job name" value="{{jobtd.task}}" required></td>
+                        <td><select class="form-control" name="status" id="exampleFormControlSelect1">
+                                <option value="{{jobtd.status}}">{{jobtd.status}}</option>
+
+                                <option class="text-success" value="Completed">Completed</option>
+                            </select>
+                        </td>
+                        <td><input type="text" name="remark" value="{{job.remark}}"></td>
+                        
+                        <td><button type="submit" name="new" value="new" class="btn btn-success">Update</button></td>
+                    </form>
+                </tr>
+                {%endfor%}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div id="collapseOne{{job.user_id}}" class="collapse show" aria-labelledby="headingOne{{job.user_id}}"
+    data-parent="#accordionExample">
+    <div class="card-body">
+        <h3 class="p-3">Previous Tasks</h3>
+        <table class="table border-0 css-serial">
+            <thead>
+                <tr class="border">
+                    <th scope="col">#</th>
+                    <th scope="col">Start date</th>
+                    <th scope="col">Job Name</th>
+                    <th scope="col">Task</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Remarks</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+
+            <tbody class="border">
+                {% for job in jobs %}
+                {% if job.day != sdate%}
+                <tr>
+                    <td></td>
+                    <td><p>{{job.sdate}}</p></td>
+                    <form method="POST">
+                        {% csrf_token %}
+                        <input type="text" name="user" class="d-none" value="{{job.id}}">
+                        <td><input type="text" name="job" placeholder="Job name" value="{{job.jobname}}" required></td>
+                        <td><input type="text" name="task" placeholder="Job name" value="{{job.task}}" required></td>
+                        <td><select class="form-control" name="status" id="exampleFormControlSelect1">
+                                <option value="{{job.status}}">{{job.status}}</option>
+
+                                <option class="text-success" value="Completed">Completed</option>
+                            </select>
+                        </td>
+                        <td><input type="text" name="remark" value="{{job.remark}}"></td>
+                        <td><button type="submit" name="old" value="true" class="btn btn-success">Update Status</button></td>
+                    </form>
+                </tr>
+                {%endif%}
+                {%endfor%}
+            </tbody>
+
+        </table>
+    </div>
+</div>
+{%endblock%}

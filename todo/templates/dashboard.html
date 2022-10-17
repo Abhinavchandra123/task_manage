@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+{%load static%}
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Skydash Admin</title>
+  <!-- plugins:css -->
+  <link rel="stylesheet" href="{%static 'assets/vendors/feather/feather.css' %}">
+  <link rel="stylesheet" href="{%static 'assets/vendors/ti-icons/css/themify-icons.css' %}">
+  <link rel="stylesheet" href="{%static 'assets/vendors/css/vendor.bundle.base.css' %}">
+  <!-- endinject -->
+  <!-- Plugin css for this page -->
+  <link rel="stylesheet" href="{%static 'assets/vendors/mdi/css/materialdesignicons.min.css' %}">
+  <!-- End plugin css for this page -->
+  <!-- inject:css -->
+  <link rel="stylesheet" href="{%static 'assets/css/vertical-layout-light/style.css' %}">
+  <!-- endinject -->
+  <link rel="shortcut icon" href="{%static 'assets/images/aklogo.png' %}" />
+  <style>
+    .css-serial {
+      counter-reset: serial-number;
+      /* Set the serial number counter to 0 */
+    }
+
+    .css-serial td:first-child:before {
+      counter-increment: serial-number;
+      /* Increment the serial number counter */
+      content: counter(serial-number);
+      /* Display the counter */
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container-scroller">
+    <!-- partial:partials/_navbar.html -->
+    <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+      <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
+        <a class="navbar-brand brand-logo mr-5" href="index.html"><img src="{%static 'assets/images/logo.svg' %}"
+            class="mr-2" alt="logo" /></a>
+        <a class="navbar-brand brand-logo-mini" href="index.html"><img src="{%static 'assets/images/logo-mini.svg' %}"
+            alt="logo" /></a>
+      </div>
+      <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
+        <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
+          <span class="icon-menu"></span>
+        </button>
+
+        <ul class="navbar-nav navbar-nav-right">
+          <li class="nav-item dropdown">
+            <a class="dropdown-item">
+              <i class="ti-power-off text-primary"></i>
+              Logout
+            </a>
+          </li>
+          <li class="nav-item nav-settings d-none d-lg-flex">
+            <a class="nav-link" href="#">
+              <i class="icon-ellipsis"></i>
+            </a>
+          </li>
+        </ul>
+        <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button"
+          data-toggle="offcanvas">
+          <span class="icon-menu"></span>
+        </button>
+      </div>
+    </nav>
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
+      <!-- partial:partials/_settings-panel.html -->
+      <div class="theme-setting-wrapper">
+        <div id="settings-trigger"><i class="ti-settings"></i></div>
+        <div id="theme-settings" class="settings-panel">
+          <i class="settings-close ti-close"></i>
+          <p class="settings-heading">SIDEBAR SKINS</p>
+          <div class="sidebar-bg-options selected" id="sidebar-light-theme">
+            <div class="img-ss rounded-circle bg-light border mr-3"></div>Light
+          </div>
+          <div class="sidebar-bg-options" id="sidebar-dark-theme">
+            <div class="img-ss rounded-circle bg-dark border mr-3"></div>Dark
+          </div>
+          <p class="settings-heading mt-2">HEADER SKINS</p>
+          <div class="color-tiles mx-0 px-4">
+            <div class="tiles success"></div>
+            <div class="tiles warning"></div>
+            <div class="tiles danger"></div>
+            <div class="tiles info"></div>
+            <div class="tiles dark"></div>
+            <div class="tiles default"></div>
+          </div>
+        </div>
+      </div>
+      <div id="right-sidebar" class="settings-panel">
+        <i class="settings-close ti-close"></i>
+        <ul class="nav nav-tabs border-top" id="setting-panel" role="tablist">
+          <li class="nav-item">
+            <a class="nav-link active" id="todo-tab" data-toggle="tab" href="#todo-section" role="tab"
+              aria-controls="todo-section" aria-expanded="true">TO DO LIST</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="chats-tab" data-toggle="tab" href="#chats-section" role="tab"
+              aria-controls="chats-section">CHATS</a>
+          </li>
+        </ul>
+        <div class="tab-content" id="setting-content">
+          <div class="tab-pane fade show active scroll-wrapper" id="todo-section" role="tabpanel"
+            aria-labelledby="todo-section">
+            <div class="add-items d-flex px-3 mb-0">
+              <form class="form w-100">
+                <div class="form-group d-flex">
+                  <input type="text" class="form-control todo-list-input" placeholder="Add To-do">
+                  <button type="submit" class="add btn btn-primary todo-list-add-btn" id="add-task">Add</button>
+                </div>
+              </form>
+            </div>
+            <div class="list-wrapper px-3">
+              <ul class="d-flex flex-column-reverse todo-list">
+                <li>
+                  <div class="form-check">
+                    <label class="form-check-label">
+                      <input class="checkbox" type="checkbox">
+                      Team review meeting at 3.00 PM
+                    </label>
+                  </div>
+                  <i class="remove ti-close"></i>
+                </li>
+                <li>
+                  <div class="form-check">
+                    <label class="form-check-label">
+                      <input class="checkbox" type="checkbox">
+                      Prepare for presentation
+                    </label>
+                  </div>
+                  <i class="remove ti-close"></i>
+                </li>
+                <li>
+                  <div class="form-check">
+                    <label class="form-check-label">
+                      <input class="checkbox" type="checkbox">
+                      Resolve all the low priority tickets due today
+                    </label>
+                  </div>
+                  <i class="remove ti-close"></i>
+                </li>
+                <li class="completed">
+                  <div class="form-check">
+                    <label class="form-check-label">
+                      <input class="checkbox" type="checkbox" checked>
+                      Schedule meeting for next week
+                    </label>
+                  </div>
+                  <i class="remove ti-close"></i>
+                </li>
+                <li class="completed">
+                  <div class="form-check">
+                    <label class="form-check-label">
+                      <input class="checkbox" type="checkbox" checked>
+                      Project review
+                    </label>
+                  </div>
+                  <i class="remove ti-close"></i>
+                </li>
+              </ul>
+            </div>
+            <h4 class="px-3 text-muted mt-5 font-weight-light mb-0">Events</h4>
+            <div class="events pt-4 px-3">
+              <div class="wrapper d-flex mb-2">
+                <i class="ti-control-record text-primary mr-2"></i>
+                <span>Feb 11 2018</span>
+              </div>
+              <p class="mb-0 font-weight-thin text-gray">Creating component page build a js</p>
+              <p class="text-gray mb-0">The total number of sessions</p>
+            </div>
+            <div class="events pt-4 px-3">
+              <div class="wrapper d-flex mb-2">
+                <i class="ti-control-record text-primary mr-2"></i>
+                <span>Feb 7 2018</span>
+              </div>
+              <p class="mb-0 font-weight-thin text-gray">Meeting with Alisa</p>
+              <p class="text-gray mb-0 ">Call Sarah Graves</p>
+            </div>
+          </div>
+          <!-- To do section tab ends -->
+          <div class="tab-pane fade" id="chats-section" role="tabpanel" aria-labelledby="chats-section">
+            <div class="d-flex align-items-center justify-content-between border-bottom">
+              <p class="settings-heading border-top-0 mb-3 pl-3 pt-0 border-bottom-0 pb-0">Friends</p>
+              <small class="settings-heading border-top-0 mb-3 pt-0 border-bottom-0 pb-0 pr-3 font-weight-normal">See
+                All</small>
+            </div>
+            <ul class="chat-list">
+              <li class="list active">
+                <div class="profile"><img src="{%static 'assets/images/faces/face1.jpg' %}" alt="image"><span
+                    class="online"></span>
+                </div>
+                <div class="info">
+                  <p>Thomas Douglas</p>
+                  <p>Available</p>
+                </div>
+                <small class="text-muted my-auto">19 min</small>
+              </li>
+              <li class="list">
+                <div class="profile"><img src="{%static 'assets/images/faces/face2.jpg' %}" alt="image"><span
+                    class="offline"></span>
+                </div>
+                <div class="info">
+                  <div class="wrapper d-flex">
+                    <p>Catherine</p>
+                  </div>
+                  <p>Away</p>
+                </div>
+                <div class="badge badge-success badge-pill my-auto mx-2">4</div>
+                <small class="text-muted my-auto">23 min</small>
+              </li>
+              <li class="list">
+                <div class="profile"><img src="{%static 'assets/images/faces/face3.jpg' %}" alt="image"><span
+                    class="online"></span>
+                </div>
+                <div class="info">
+                  <p>Daniel Russell</p>
+                  <p>Available</p>
+                </div>
+                <small class="text-muted my-auto">14 min</small>
+              </li>
+              <li class="list">
+                <div class="profile"><img src="{%static 'assets/images/faces/face4.jpg' %}" alt="image"><span
+                    class="offline"></span>
+                </div>
+                <div class="info">
+                  <p>James Richardson</p>
+                  <p>Away</p>
+                </div>
+                <small class="text-muted my-auto">2 min</small>
+              </li>
+              <li class="list">
+                <div class="profile"><img src="{%static 'assets/images/faces/face5.jpg' %}" alt="image"><span
+                    class="online"></span>
+                </div>
+                <div class="info">
+                  <p>Madeline Kennedy</p>
+                  <p>Available</p>
+                </div>
+                <small class="text-muted my-auto">5 min</small>
+              </li>
+              <li class="list">
+                <div class="profile"><img src="{%static 'assets/images/faces/face6.jpg' %}" alt="image"><span
+                    class="online"></span>
+                </div>
+                <div class="info">
+                  <p>Sarah Graves</p>
+                  <p>Available</p>
+                </div>
+                <small class="text-muted my-auto">47 min</small>
+              </li>
+            </ul>
+          </div>
+          <!-- chat tab ends -->
+        </div>
+      </div>
+      <!-- partial -->
+      <!-- partial:partials/_sidebar.html -->
+      <nav class="sidebar sidebar-offcanvas" id="sidebar">
+        <ul class="nav">
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'ind'%}">
+              <i class="icon-grid menu-icon"></i>
+              <span class="menu-title">Dashboard</span>
+            </a>
+
+          <li class="nav-item active">
+            <a class="nav-link" href="{% url 'manage' %}">
+              <i class="icon-paper  menu-icon"></i>
+              <span class="menu-title">TaskManagement</span>
+            </a>
+          </li>
+          
+          <li class="nav-item ">
+            <a class="nav-link" href="{% url 'list' %}">
+              <i class="icon-paper  menu-icon"></i>
+              <span class="menu-title">list Employee</span>
+            </a>
+          </li>
+          <li class="nav-item ">
+            <a class="nav-link" href="{% url 'rep' %}">
+              <i class="icon-paper  menu-icon"></i>
+              <span class="menu-title">Report</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+      <!-- partial -->
+      <div class="main-panel">
+        <div class="content-wrapper">
+          <div class="row">
+            <div class="col-lg-12 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title d-flex"> <i class="mdi mdi-calendar h2"></i><span class="m-2"> {{dates}}</span>
+                  </h4>
+                  <!-- <p class="card-description">
+                    Add class <code>.table-striped</code>
+                  </p> -->
+
+                  <div class="accordion  table-responsive" id="accordionExample">
+
+                    <table class="table">
+                      <thead>
+
+                        <tr>
+                          <th class="col-1"> &nbsp;&nbsp;&nbsp; </th>
+                          <th class="col-3"> Name </th>
+                          <th class="col-3"> Progress </th>
+                          <th class="col-3"> Amount </th>
+                          <th class="col-3"> More details </th>
+                        </tr>
+
+                      </thead>
+
+                    </table>
+                    {%for emp in emps%}
+                    <table class="table">
+                      <tbody>
+
+                        <tr id="headingOne">
+                          <td class="py-1 col-1">
+                            <img src="{%static 'assets/images/faces/face2.jpg' %}" alt="image" />
+                          </td>
+
+                          <td class="col-3"> {{emp.name}}</td>
+
+                          <td class="col-3"> {{emp.progress}} Not completed </td>
+                          {%block mainpane%}
+                          <td class="col-3"><button class="btn btn-outline-primary" type="button" data-toggle="collapse"
+                              data-target="#collapseOneq{{emp.id}}" aria-expanded="true"
+                              aria-controls="collapseOneq{{emp.id}}">Add New
+                              tasks
+                            </button></td>
+                          <td class="col-3"><a href="{% url 'prev' %}?empl={{emp.id}}" class="btn btn-outline-warning"
+                              type="button">View Tasks</a>
+                          </td>
+                        </tr>
+
+                    </table>
+
+                    <!-- <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
+                      data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                      Collapsible Group Item #1
+                    </button> -->
+
+                    <div id="collapseOneq{{emp.id}}" class="collapse" aria-labelledby="headingOneq{{emp.id}}"
+                      data-parent="#accordionExample">
+                      <div class="card-body">
+                        <h3 class="p-3">New Tasks</h3>
+                        <table class="table">
+                          <thead>
+
+                            <tr class="border">
+                              <th scope="col">#</th>
+                              <th scope="col">Job Name</th>
+                              <th scope="col">Task</th>
+                              <th scope="col">Reference</th>
+                              <th scope="col"></th>
+                            </tr>
+                          </thead>
+                          <tbody class="border">
+                            <tr>
+                              <form method="POST">
+                                {% csrf_token %}
+                                <th scope="row">1</th>
+                                <input type="text" name="user" class="d-none" value="{{emp.id}}">
+                                <td><input type="text" name="jobadd" placeholder="Job name" required></td>
+                                <td><input type="text" name="task" placeholder="Task" required></td>
+                                <td><input type="text" name="refer" placeholder="reference"></td>
+                                <td><button type="submit" name="add" value="add" class="btn btn-success">Add to
+                                    Tasks</button></td>
+                              </form>
+                            </tr>
+                            <tr>
+                              <td colspan="5"><button type="button" class="btn btn-primary d-flex m-auto">+ Create New
+                                  Task</button>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+
+
+                    {%endblock%}
+                    {%endfor%}
+
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <!-- content-wrapper ends -->
+        <!-- partial:partials/_footer.html -->
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+          aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <div id="collapseOne{{job.user_id}}" class="collapse show" aria-labelledby="headingOne{{job.user_id}}"
+    data-parent="#accordionExample">
+    <div class="card-body">
+        <h3 class="p-3">Previous Tasks</h3>
+        <table class="table border-0 css-serial">
+            <thead>
+                <tr class="border">
+                    <th scope="col">#</th>
+                    <th scope="col">Job Name</th>
+                    <th scope="col">Task</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Remarks</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+
+            <tbody class="border">
+                {% for job in jobs %}
+
+                <tr>
+                    <td></td>
+                    <form method="POST">
+                        {% csrf_token %}
+                        <input type="text" name="user" class="d-none" value="{{job.id}}">
+                        <td><input type="text" name="job" placeholder="Job name" value="{{job.jobname}}" required></td>
+                        <td><input type="text" name="task" placeholder="Job name" value="{{job.task}}" required></td>
+                        <td><select class="form-control" name="status" id="exampleFormControlSelect1">
+                                <option value="{{job.status}}">{{job.status}}</option>
+
+                                <option class="text-success" value="Completed">Completed</option>
+                            </select>
+                        </td>
+                        <td><input type="text" name="remark" value="{{job.remark}}"></td>
+                        <td><button type="submit" name="old" value="true" class="btn btn-success">Update Status</button></td>
+                    </form>
+                </tr>
+       
+                {%endfor%}
+            </tbody>
+
+        </table>
+    </div>
+</div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+
+
+        <footer class="footer">
+          <div class="d-sm-flex justify-content-center justify-content-sm-between">
+            <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2021. Premium <a
+                href="https://www.bootstrapdash.com/" target="_blank">Bootstrap admin template</a> from BootstrapDash.
+              All rights reserved.</span>
+            <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made with <i
+                class="ti-heart text-danger ml-1"></i></span>
+          </div>
+        </footer>
+        <!-- partial -->
+      </div>
+      <!-- main-panel ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+  </div>
+  <!-- container-scroller -->
+  <!-- plugins:js -->
+  <script src="{%static 'assets/vendors/js/vendor.bundle.base.js' %}"></script>
+  <!-- endinject -->
+  <!-- Plugin js for this page -->
+  <!-- End plugin js for this page -->
+  <!-- inject:js -->
+  <script src="{%static 'assets/js/off-canvas.js' %}"></script>
+  <script src="{%static 'assets/js/hoverable-collapse.js' %}"></script>
+  <script src="{%static 'assets/js/template.js' %}"></script>
+  <script src="{%static 'assets/js/settings.js' %}"></script>
+  <script src="{%static 'assets/js/todolist.js' %}"></script>
+  <!-- endinject -->
+  <!-- Custom js for this page-->
+  <!-- End custom js for this page-->
+</body>
+
+</html>
