@@ -71,7 +71,7 @@
           <div class="card-body">
             <h4 class="card-title">Task Report</h4>
             <form method="post">
-            <div class="form-group row ">
+              <div class="form-group row ">
 
                 {% csrf_token %}
                 <label class="col-1 col-form-label">From</label>
@@ -85,55 +85,166 @@
                 <div class="col-3">
                   <button type="submit" class="btn btn-warning">Apply</button>
                 </div>
-            </div>
-          </form>
+              </div>
 
-            <button class="btn btn-primary d-flex ml-auto" onclick="exportTableToExcel('tblData')">Save as .xls
-              file</button>
-            <!-- <p class="card-description">
+              
+              <!-- <p class="card-description">
                     Add class <code >.table</code>
                   </p> -->
-            <div class="table-responsive">
-              <table class="table" id="tblData">
-                <thead>
-                  <tr>
-                    <th>Name</th>
-                    <th>ID No.</th>
-                    <th>Total tasks</th>
-                    <th>Completed tasks</th>
-                    <th>Not Completed tasks</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {%for emp in emps %}
-                  <tr>
-                    <td>{{emp.id}}</td>
-                    <td>{{emp.name}}</td>
-                    <td><label class="badge badge-primary">{{emp.tempt}}</label> Tasks</td>
-                    <td><label class="badge badge-success">{{emp.tempc}}</label> Completed</td>
-                    <td><label class="badge badge-danger">{{emp.tempp}}</label> Pending</td>
-                  </tr>
-                  {%endfor%}
-                </tbody>
-              </table>
+              <div class="accordion  table-responsive" id="accordionExample">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>ID No.</th>
+                      <th>Total tasks</th>
+                      <th>Completed tasks</th>
+                      <th>Not Completed tasks</th>
+                      <th>pick</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {%for emp in emps %}
+                    <tr>
+                      <td>{{emp.id}}</td>
+                      <td>{{emp.name}}</td>
+                      <td><label class="badge badge-primary">{{emp.tempt}}</label>
+                        {%if uid %}
+                        <button
+                          class="btn btn-outline-primary" type="button" data-toggle="collapse"
+                          data-target="#collapseOneq" aria-expanded="true" aria-controls="collapseOneq">Total</button>
+                        {%endif%}
+                      </td>
+                      <td><label class="badge badge-success">{{emp.tempc}}</label>
+                        {%if uid %}
+                        <button
+                          class="btn btn-outline-primary" type="button" data-toggle="collapse"
+                          data-target="#collapseOneq2" aria-expanded="true"
+                          aria-controls="collapseOneq">Completed</button>
+                        {%endif%}
+                        </td>
+                      <td><label class="badge badge-danger">{{emp.tempp}}</label>
+                        {%if uid %}
+                        <button class="btn btn-outline-primary"
+                          type="button" data-toggle="collapse" data-target="#collapseOneq1" aria-expanded="true"
+                          aria-controls="collapseOneq">Pending</button>
+                        {%endif%}
+                        </td>
+                      <td><input type="radio" name="user" value="{{emp.id}}"></td>
+                      {% if uid %}
+                      <!-- <td><button class="btn btn-primary d-flex ml-auto" onclick="exportTableToExcel('tblData','{{emp.name}}')">Save as .xls
+                        file</button></td> -->
+                      <td><a href="{% url 'download_file' filename='report.xlsx' %}" class="btn btn-primary d-flex ml-auto">Saveas .xlsfile</a></td>
+                      {%endif%}
+                    </tr>
+                    {%endfor%}
+                  </tbody>
+                </table>
+            </form>
+            <div id="collapseOneq" class="collapse" aria-labelledby="headingOneq" data-parent="#accordionExample">
+              <div class="card-body">
+                <h3 class="p-3">Total Tasks</h3>
+                <table class="table" id="tblData">
+                    <tr class="border">
+                      <th >Job.id</th>
+                      <th >Start date</th>
+                      <th >Job Name</th>
+                      <th >Task</th>
+                      <th >Status</th>
+                      <th >Remark</th>
+                      <th ></th>
+                    </tr>
+                    {%for job in jobs%}
+                    {%if job.id in jsj%}
+                    <tr>
+                      <td>{{job.id}}</td>
+                      <td>{{job.sdate}}</td>
+                      <td>{{job.jobname}}</td>
+                      <td>{{job.task}}</td>
+                      <td>{{job.status}}</td>
+                      <td>{{job.remark}}</td>
+                    </tr>
+                    {%endif%}
+                    {%endfor%}
+                </table>
+              </div>
             </div>
+            <div id="collapseOneq1" class="collapse" aria-labelledby="headingOneq" data-parent="#accordionExample">
+              <div class="card-body">
+                <h3 class="p-3">Pending Tasks</h3>
+
+                <table class="table">
+                 
+                    <tr class="border">
+                      <th>#</th>
+                      <th>Start date</th>
+                      <th>Job Name</th>
+                      <th>Task</th>
+                      <th>Status</th>
+                      <th>Remark</th>
+                    </tr>
+                    {%for job in jobs%}
+                    {%if job.id in jsjn%}
+                    <tr>
+                      <td>1</td>
+                      <td>{{job.sdate}}</td>
+                      <td>{{job.jobname}}</td>
+                      <td>{{job.task}}</td>
+                      <td>{{job.status}}</td>
+                      <td>{{job.remark}}</td>
+                    </tr>
+                    {%endif%}
+                    {%endfor%}
+                </table>
+              </div>
+            </div>
+            <div id="collapseOneq2" class="collapse" aria-labelledby="headingOneq" data-parent="#accordionExample">
+              <div class="card-body">
+                <h3 class="p-3">Completed Tasks</h3>
+                <table class="table css-serial">
+                  <thead>
+                    <tr class="border">
+                      <th>Job.id</th>
+                      <th>Start date</th>
+                      <th>Job Name</th>
+                      <th>Task</th>
+                      <th>Status</th>
+                      <th>Remark</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody class="border">
+
+                    {%for job in jobs%}
+                    {%if job.id in jsjc%}
+                    <tr>
+                      <td>{{job.id}}</td>
+                      <td>{{job.sdate}}</td>
+                      <td>{{job.jobname}}</td>
+                      <td>{{job.task}}</td>
+                      <td>{{job.status}}</td>
+                      <td>{{job.remark}}</td>
+                    </tr>
+                    {%endif%}
+                    {%endfor%}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <!-- content-wrapper ends -->
+            <!-- partial:partials/_footer.html -->
+            <footer class="footer">
+              <div class="d-sm-flex justify-content-center justify-content-sm-between">
+                <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2021. Premium
+                  <a href="https://www.bootstrapdash.com/" target="_blank">Bootstrap admin template</a> from
+                  BootstrapDash.
+                  All rights reserved.</span>
+                <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made with <i
+                    class="ti-heart text-danger ml-1"></i></span>
+              </div>
+            </footer>
+            <!-- partial -->
           </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!-- content-wrapper ends -->
-  <!-- partial:partials/_footer.html -->
-  <footer class="footer">
-    <div class="d-sm-flex justify-content-center justify-content-sm-between">
-      <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2021. Premium <a
-          href="https://www.bootstrapdash.com/" target="_blank">Bootstrap admin template</a> from BootstrapDash.
-        All rights reserved.</span>
-      <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made with <i
-          class="ti-heart text-danger ml-1"></i></span>
-    </div>
-  </footer>
-  <!-- partial -->
-</div>
-<!-- main-panel ends -->
-{%endblock%}
+          <!-- main-panel ends -->
+          {%endblock%}

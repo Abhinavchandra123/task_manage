@@ -1,0 +1,139 @@
+{%extends 'index.html'%}
+{%block mainpanel%}
+<script>
+  function exportTableToExcel(tableID, filename = '') {
+    var downloadLink;
+    var dataType = 'application/vnd.ms-excel';
+    var tableSelect = document.getElementById(tableID);
+    var tableHTML = tableSelect.outerHTML.replace(/ /g, '%20');
+
+    // Specify file name
+    filename = filename ? filename + '.xls' : 'excel_report.xls';
+
+    // Create download link element
+    downloadLink = document.createElement("a");
+
+    document.body.appendChild(downloadLink);
+
+    if (navigator.msSaveOrOpenBlob) {
+      var blob = new Blob(['\ufeff', tableHTML], {
+        type: dataType
+      });
+      navigator.msSaveOrOpenBlob(blob, filename);
+    } else {
+      // Create a link to the file
+      downloadLink.href = 'data:' + dataType + ', ' + tableHTML;
+
+      // Setting the file name
+      downloadLink.download = filename;
+
+      //triggering the function
+      downloadLink.click();
+    }
+  }
+</script>
+<nav class="sidebar sidebar-offcanvas" id="sidebar">
+  <ul class="nav">
+    <li class="nav-item ">
+      <a class="nav-link " href="{%url 'ind'%}">
+        <i class="icon-grid menu-icon"></i>
+        <span class="menu-title">Dashboard</span>
+      </a>
+
+    <li class="nav-item">
+      <a class="nav-link" href="{% url 'manage' %}">
+        <i class="icon-paper menu-icon"></i>
+        <span class="menu-title">TaskManagement</span>
+      </a>
+    </li>
+
+    <li class="nav-item ">
+      <a class="nav-link" href="{% url 'list' %}">
+        <i class="icon-paper  menu-icon"></i>
+        <span class="menu-title">list Employee</span>
+      </a>
+    </li>
+
+    <li class="nav-item active">
+      <a class="nav-link" href="{% url 'rep' %}">
+        <i class="icon-paper  menu-icon"></i>
+        <span class="menu-title">Report</span>
+      </a>
+    </li>
+  </ul>
+</nav>
+<!-- partial -->
+<div class="main-panel">
+  <div class="content-wrapper">
+    <div class="row">
+      <div class="col-lg-12 grid-margin stretch-card">
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title">Task Report</h4>
+            <form method="post">
+            <div class="form-group row ">
+
+                {% csrf_token %}
+                <label class="col-1 col-form-label">From</label>
+                <div class="col-3">
+                  <input type="date" class="form-control" name="from" placeholder="dd/mm/yyyy" />
+                </div>
+                <label class="col-1 col-form-label">To</label>
+                <div class="col-3">
+                  <input type="date" class="form-control" name="to" placeholder="dd/mm/yyyy" />
+                </div>
+                <div class="col-3">
+                  <button type="submit" class="btn btn-warning">Apply</button>
+                </div>
+            </div>
+          </form>
+
+            <button class="btn btn-primary d-flex ml-auto" onclick="exportTableToExcel('tblData')">Save as .xls
+              file</button>
+            <!-- <p class="card-description">
+                    Add class <code >.table</code>
+                  </p> -->
+            <div class="table-responsive">
+              <table class="table" id="tblData">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>ID No.</th>
+                    <th>Total tasks</th>
+                    <th>Completed tasks</th>
+                    <th>Not Completed tasks</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {%for emp in emps %}
+                  <tr>
+                    <td>{{emp.id}}</td>
+                    <td>{{emp.name}}</td>
+                    <td><label class="badge badge-primary">{{emp.tempt}}</label> Tasks</td>
+                    <td><label class="badge badge-success">{{emp.tempc}}</label> Completed</td>
+                    <td><label class="badge badge-danger">{{emp.tempp}}</label> Pending</td>
+                  </tr>
+                  {%endfor%}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- content-wrapper ends -->
+  <!-- partial:partials/_footer.html -->
+  <footer class="footer">
+    <div class="d-sm-flex justify-content-center justify-content-sm-between">
+      <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2021. Premium <a
+          href="https://www.bootstrapdash.com/" target="_blank">Bootstrap admin template</a> from BootstrapDash.
+        All rights reserved.</span>
+      <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made with <i
+          class="ti-heart text-danger ml-1"></i></span>
+    </div>
+  </footer>
+  <!-- partial -->
+</div>
+<!-- main-panel ends -->
+{%endblock%}

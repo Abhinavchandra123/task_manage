@@ -20,6 +20,19 @@
   <link rel="stylesheet" href="{%static 'assets/css/vertical-layout-light/style.css' %}">
   <!-- endinject -->
   <link rel="shortcut icon" href="{%static 'assets/images/favicon.png' %}" />
+  <style>
+    .css-serial {
+      counter-reset: serial-number;
+      /* Set the serial number counter to 0 */
+    }
+
+    .css-serial td:first-child:before {
+      counter-increment: serial-number;
+      /* Increment the serial number counter */
+      content: counter(serial-number);
+      /* Display the counter */
+    }
+  </style>
 </head>
 <body>
   <div class="container-scroller">
